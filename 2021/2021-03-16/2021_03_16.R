@@ -63,8 +63,8 @@ df <- game %>%
            date == ymd("2020-04-15") ~ 1,
            TRUE ~ 0),
          label = case_when(
-           date == ymd("2020-01-15") ~ str_wrap("Covid-19"),
-           date == ymd("2020-04-15") ~ str_wrap("Stay at home order"),
+           date == ymd("2020-01-15") ~ "Covid-19",
+           date == ymd("2020-04-15") ~ "Social Distancing",
            TRUE ~ NA_character_)) %>%
   arrange(date) 
 
@@ -96,14 +96,14 @@ df %>%
                                   face = "bold", color="#2a475e"),
     plot.subtitle = element_text(family = "poppins", size = 15, 
                                  face = "bold", color="#1b2838"),
-    plot.caption = element_text(size = rel(1), hjust = 0),
-    axis.text = element_text(size = rel(1.25), color = "black"),
-    plot.title.position = "plot",
-    plot.caption.position = "plot",
+    plot.caption = element_text(size = 10),
+    axis.text = element_text(size = 10, color = "black"),
     rect = element_blank(),
     panel.grid = element_line(color = "#b4aea9"),
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank(),
+    #plot.title.position = "plot",
+    #plot.caption.position = "plot",
     #panel.grid.major.x = element_line(linetype="dashed"),
     #panel.grid.major.y = element_blank(),
     panel.grid.major.y = element_line(linetype="dashed"),
