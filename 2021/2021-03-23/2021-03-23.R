@@ -172,3 +172,64 @@ ggsave(
   height = 10,
   device = "png"
 )
+
+
+
+# Code from
+# https://github.com/gkaramanis/tidytuesday/blob/master/2021/2021-week12/unvotes-bar.R
+# library(tidyverse)
+# library(vhs)
+# 
+# tuesdata <- tidytuesdayR::tt_load('2021-03-23')
+# 
+# issues <- tuesdata$issues
+# 
+# issues_count <- issues %>% 
+#   count(issue) %>% 
+#   mutate(issue = fct_rev(issue))
+# 
+# pal <- vhs("recoton")
+# 
+# # ggplot(issues) +
+# #   geom_bar(aes(x=issue, fill=issue))
+# 
+# font_add_google("Chango", "chango")
+# showtext_auto()
+# 
+# ggplot(issues_count) +
+#   geom_col(aes(x = n - 100, y = issue, fill = issue)) +
+#   # Letters
+#   geom_text(aes(x = n-30, y = issue, label = str_sub(issue, 1, 1), color = issue),
+#             family = "chango",stat = "unique", hjust = 1,size = 43, nudge_x = 18) +
+#   # Issue labels
+#   geom_text(aes(x = 50, y = issue, label = toupper(issue)), stat = "unique",
+#             hjust = 0, color = "grey97", nudge_y = -0.325, size = 3.5) +
+#   # Issue Number
+#   geom_text(aes(x = 40, y = issue, label = n), stat = "unique",
+#             hjust = 0, color = "grey97", size = 28,  nudge_y = 0.04) +
+#   # # Hide the ugly stuff
+#   # geom_tile(aes(x = n/2, y = issue, width = n, height = 0.925),
+#   #           fill = NA, color = "grey25", size = 3) +
+#   # Scales, theme, etc.
+#   #scale_color_manual(values = pal) +
+#   #scale_fill_manual(values = pal) +
+#   coord_cartesian(expand = FALSE) +
+#   labs(
+#     title = "UN roll call votes by issue",
+#     caption = "Source: Harvard's Dataverse · Graphic: Georgios Karamanis") +
+#   theme_void() +
+#   theme(
+#     legend.position = "none",
+#     plot.background = element_rect(fill = "grey25", color = NA),
+#     plot.title = element_text(margin = margin(0, 0, 10, 0), family = "Produkt Medium", color = "grey97", size = 30, hjust = 0.5),
+#     plot.caption = element_text(margin = margin(10, 0, 0, 0), hjust = 1, family = "Produkt", color = "grey70", size = 7),
+#     plot.margin = margin(20, 20, 10, 20)
+#   )
+# 
+# 
+# ggsave(
+#   filename = here::here("2021","2021-03-23","test.png"),
+#   width = 10,
+#   height = 10,
+#   device = "png"
+# )

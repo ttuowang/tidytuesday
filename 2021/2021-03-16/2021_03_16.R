@@ -1,5 +1,4 @@
 # Title: TidyTuesday, 2021-03-16
-# Description: Video Games and Sliced
 # Author: Tuo Wang
 # Date: 2021-03-23
 
