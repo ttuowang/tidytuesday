@@ -73,7 +73,7 @@ shade_text <- data.frame(
   label1=c("98 shades with <span style='color:#159090'>**\"nude\"**</span> in the name"),
   label2=c("135 shades with <span style='color:#386cb0'>**\"natural\"**</span> in the name"),
   label3=c("401 shades with <span style='color:#A034F0'>**\"warm\"**</span> in the name"),
-  x = 0.12,
+  x = 0.102,
   y = -0.065
 )
 
@@ -90,8 +90,8 @@ nude_arrows <-
 
 natural_arrows <-
   tibble(
-    x1 = c(0.20),
-    x2 = c(0.27),
+    x1 = c(0.34),
+    x2 = c(0.28),
     y1 = c(0.35),
     y2 = c(0.08),
     label1 = "Brand: *Dermablend*<br>
@@ -109,6 +109,15 @@ warm_arrows <-
                Product: *Fluidity Full-Coverage Foundation*<br>
                Name: *Deep* <span style='color:#A034F0'>*Warm*</span>"
   )
+
+tt <- data.frame(
+  x = 0,
+  y = 0.1,
+  label1 = "Nude",
+  label2 = "Natural",
+  label3 = "Warm"
+)
+
 
 p1 <- nudeShades %>%
   ggplot() +
@@ -132,14 +141,25 @@ p1 <- nudeShades %>%
   geom_richtext(
     data=shade_text,aes(x=x,y=y,label=label1),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
-  geom_curve(
-    data = nude_arrows, 
-    aes(x=x1,y=y1,xend=x2,yend=y2),color = "gray20", curvature = 0.3,
-    arrow = arrow(length = unit(0.07, "inch")), size = 0.4) +
-  geom_richtext(
-    data = nude_arrows,
-    aes(x=x1,y=y1,label=label1),family="roboto",hjust=0,vjust=0.2,
-    size=3.0,fill = NA, label.color=NA)+
+  # geom_curve(
+  #   data = nude_arrows, 
+  #   aes(x=x1,y=y1,xend=x2,yend=y2),color = "gray20", curvature = 0.3,
+  #   arrow = arrow(length = unit(0.07, "inch")), size = 0.4) +
+  # geom_richtext(
+  #   data = nude_arrows,
+  #   aes(x=x1,y=y1,label=label1),family="roboto",hjust=0,vjust=0.2,
+  #   size=3.0,fill = NA, label.color=NA)+
+  geom_text(
+    data = tt,
+    aes(x=x, y=y, label=label1),
+    size = 15,
+    alpha=0.1,
+    family="roboto",
+    color = "#159090",
+    fontface = "bold",
+    vjust = 0.1,
+    hjust = 0.03
+  ) +
   coord_cartesian(expand = FALSE, clip = 'off')+
   ylim(c(-0.1,1)) +
   theme_minimal() +
@@ -186,15 +206,26 @@ p2 <- naturalShades %>%
   geom_richtext(
     data=shade_text,aes(x=x+0.01,y=y,label=label2),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
-  geom_curve(
-    data = natural_arrows, 
-    aes(x=x1,y=y1,xend=x2,yend=y2),color = "gray20", curvature = -0.3,
-    arrow = arrow(length = unit(0.07, "inch")), size = 0.4) +
-  geom_richtext(
-    data = natural_arrows,
-    aes(x=x1,y=y1,label=label1),family="roboto",hjust=1.0,vjust=0.2,
-    size=3.0,fill = NA, label.color=NA)+
+  # geom_curve(
+  #   data = natural_arrows, 
+  #   aes(x=x1,y=y1,xend=x2,yend=y2),color = "gray20", curvature = 0.3,
+  #   arrow = arrow(length = unit(0.07, "inch")), size = 0.4) +
+  # geom_richtext(
+  #   data = natural_arrows,
+  #   aes(x=x1,y=y1,label=label1),family="roboto",hjust=0,vjust=0.2,
+  #   size=3.0,fill = NA, label.color=NA)+
   coord_cartesian(expand = FALSE, clip = 'off')+
+  geom_text(
+    data = tt,
+    aes(x=x, y=y, label=label2),
+    size = 15,
+    alpha=0.1,
+    family="roboto",
+    color = "#386cb0",
+    fontface = "bold",
+    vjust = 0.1,
+    hjust = 0.03
+  ) +
   ylim(c(-0.1,1)) +
   theme_minimal() +
   theme(
@@ -239,6 +270,17 @@ p3 <- warmShades %>%
   geom_richtext(
     data=shade_text,aes(x=x+0.01,y=y,label=label3),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
+  geom_text(
+    data = tt,
+    aes(x=x, y=y, label=label3),
+    size = 15,
+    alpha=0.1,
+    family="roboto",
+    color = "#A034F0",
+    fontface = "bold",
+    vjust = 0.1,
+    hjust = 0.03
+  ) +
   # geom_curve(
   #   data = warm_arrows, 
   #   aes(x=x1,y=y1,xend=x2,yend=y2),color = "gray20", curvature = -0.3,
@@ -290,7 +332,7 @@ p1 / p2 /p3 +
   )
 
 ggsave(
-  filename = here::here("2021","2021-03-30","2021-03-30-b.png"),
+  filename = here::here("2021","2021-03-30","2021-03-30-c.png"),
   width = 10,
   height = 6,
   device = "png"
