@@ -9,6 +9,7 @@ library(skimr)        # skim the data
 library(ggdist)
 library(ggtext)
 library(patchwork)
+library(showtext)
 
 font_add_google("Merriweather", "merriweather")
 font_add_google("Poppins", "poppins")
@@ -73,8 +74,8 @@ shade_text <- data.frame(
   label1=c("98 shades with <span style='color:#159090'>**\"nude\"**</span> in the name"),
   label2=c("135 shades with <span style='color:#386cb0'>**\"natural\"**</span> in the name"),
   label3=c("401 shades with <span style='color:#A034F0'>**\"warm\"**</span> in the name"),
-  x = 0.102,
-  y = -0.065
+  x = 0.095,
+  y = -0.17
 )
 
 nude_arrows <-
@@ -118,26 +119,42 @@ tt <- data.frame(
   label3 = "Warm"
 )
 
+lines <- data.frame(
+  x = c(1),
+  y = c(-0.050),
+  xend = c(0),
+  yend = c(-0.050),
+  width = c(1),
+  colour = "#392928"
+)
 
+
+#library(ggforce)
 p1 <- nudeShades %>%
   ggplot() +
   geom_dots(aes(x=lightness,fill=hex, group=1),
             shape=22, color="white",show.legend = FALSE) +
-  geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
-               arrow = arrow(length = unit(0.03, "npc")),
-               color="grey50") +
-  geom_segment(
-    data = nude_lightness_summary,color="grey40",
-    aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
-  geom_point(data = nude_lightness_summary,aes(x=q50,y=0),size=2,
-             color="grey30") +
+  # geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
+  #              arrow = arrow(length = unit(0.03, "npc")),
+  #              color="grey50") +
+  # geom_segment(
+  #   data = nude_lightness_summary,color="grey40",
+  #   aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
+  # geom_point(data = nude_lightness_summary,aes(x=q50,y=0),size=2,
+  #            color="grey30") +
   scale_fill_manual(values = nudeShades$hex) +
+  geom_link(
+    data = lines,
+    aes(x = x, y = y, xend = xend, yend = yend, 
+                alpha = stat(index)), show.legend = FALSE,
+    size=4,colour = "#824E2B") +
+  scale_colour_gradient(low="#824E2B", high="#FDFBFA")+
   # geom_rect(data = nude_lightness_summary,
   #           aes(xmin=q10,xmax=q90,ymin=-0.08,ymax=-0.03), fill="grey90")+
-  geom_text(data = nude_lightness_summary,family = "roboto",
-            aes(x=q50-0.015,y=-0.065,label=label1),size=3.0) +
-  annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
-           size=3.0)+
+  # geom_text(data = nude_lightness_summary,family = "roboto",
+  #           aes(x=q50-0.015,y=-0.065,label=label1),size=3.0) +
+  # annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
+  #          size=3.0)+
   geom_richtext(
     data=shade_text,aes(x=x,y=y,label=label1),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
@@ -161,7 +178,7 @@ p1 <- nudeShades %>%
     hjust = 0.03
   ) +
   coord_cartesian(expand = FALSE, clip = 'off')+
-  ylim(c(-0.1,1)) +
+  ylim(c(-0.17,1)) +
   theme_minimal() +
   theme(
     text = element_text(family = "poppins", size = 8, color = "black"),
@@ -188,21 +205,27 @@ p2 <- naturalShades %>%
   ggplot() +
   geom_dots(aes(x=lightness,fill=hex, group=1), size=0.1,
             shape=22, color="white",show.legend = FALSE) +
-  geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
-               arrow = arrow(length = unit(0.03, "npc")),
-               color="grey50") +
-  geom_segment(
-    data = natural_lightness_summary,color="grey40",
-    aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
-  geom_point(data = natural_lightness_summary,aes(x=q50,y=0),size=2,
-             color="grey30")+
+  # geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
+  #              arrow = arrow(length = unit(0.03, "npc")),
+  #              color="grey50") +
+  # geom_segment(
+  #   data = natural_lightness_summary,color="grey40",
+  #   aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
+  # geom_point(data = natural_lightness_summary,aes(x=q50,y=0),size=2,
+  #            color="grey30")+
   scale_fill_manual(values = naturalShades$hex) +
+  geom_link(
+    data = lines,
+    aes(x = x, y = y, xend = xend, yend = yend, 
+        alpha = stat(index)), show.legend = FALSE,
+    size=4,colour = "#824E2B") +
+  scale_colour_gradient(low="#824E2B", high="#FDFBFA")+
   # geom_rect(data = natural_lightness_summary,
   #           aes(xmin=q10,xmax=q90,ymin=-0.08,ymax=-0.03), fill="grey90")+
-  geom_text(data = natural_lightness_summary,family = "roboto",
-            aes(x=q50+0.015,y=-0.065,label=label1),size=3.0) +
-  annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
-           size=3.0)+
+  # geom_text(data = natural_lightness_summary,family = "roboto",
+  #           aes(x=q50+0.015,y=-0.065,label=label1),size=3.0) +
+  # annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
+  #          size=3.0)+
   geom_richtext(
     data=shade_text,aes(x=x+0.01,y=y,label=label2),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
@@ -226,7 +249,7 @@ p2 <- naturalShades %>%
     vjust = 0.1,
     hjust = 0.03
   ) +
-  ylim(c(-0.1,1)) +
+  ylim(c(-0.17,1)) +
   theme_minimal() +
   theme(
     text = element_text(family = "roboto", size = 8, color = "black"),
@@ -254,21 +277,27 @@ p3 <- warmShades %>%
   ggplot() +
   geom_dots(aes(x=lightness,fill=hex, group=1), size=0.1,
             shape=22, color="white",show.legend = FALSE) +
-  geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
-               arrow = arrow(length = unit(0.03, "npc")),
-               color="grey50") +
-  geom_segment(
-    data = warm_lightness_summary,color="grey40",
-    aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
-  geom_point(data = warm_lightness_summary,aes(x=q50,y=0),size=2,
-             color="grey30")+
+  # geom_segment(aes(x=0,xend=1.07,y=0,yend=0),
+  #              arrow = arrow(length = unit(0.03, "npc")),
+  #              color="grey50") +
+  # geom_segment(
+  #   data = warm_lightness_summary,color="grey40",
+  #   aes(x=q10,xend=q90,y=0,yend=0),size=1.5)+
+  # geom_point(data = warm_lightness_summary,aes(x=q50,y=0),size=2,
+  #            color="grey30")+
+  geom_link(
+    data = lines,
+    aes(x = x, y = y, xend = xend, yend = yend, 
+        alpha = stat(index)), show.legend = FALSE,
+    size=4,colour = "#824E2B") +
+  scale_colour_gradient(low="#824E2B", high="#FDFBFA")+
   scale_fill_manual(values = warmShades$hex) +
-  geom_text(data = warm_lightness_summary,family = "roboto",
-            aes(x=q50,y=-0.065,label=label1),size=3.0) +
-  annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
-           size=3.0)+
+  # geom_text(data = warm_lightness_summary,family = "roboto",
+  #           aes(x=q50,y=-0.065,label=label1),size=3.0) +
+  # annotate("text", x=1.04,y=-0.065,label="lightness",family="roboto",
+  #          size=3.0)+
   geom_richtext(
-    data=shade_text,aes(x=x+0.01,y=y,label=label3),family="roboto",
+    data=shade_text,aes(x=x+0.005,y=y,label=label3),family="roboto",
     size=3.0,fill = NA, label.color=NA) +
   geom_text(
     data = tt,
@@ -290,7 +319,7 @@ p3 <- warmShades %>%
   #   aes(x=x1,y=y1,label=label1),family="roboto",hjust=0,vjust=0.2,
   #   size=3.0,fill = NA, label.color=NA)+
   coord_cartesian(expand = FALSE, clip = 'off')+
-  ylim(c(-0.1,1)) +
+  ylim(c(-0.17,1)) +
   theme_minimal() +
   theme(
     text = element_text(family = "roboto", size = 8, color = "black"),
@@ -332,7 +361,7 @@ p1 / p2 /p3 +
   )
 
 ggsave(
-  filename = here::here("2021","2021-03-30","2021-03-30-c.png"),
+  filename = here::here("2021","2021-03-30","2021-03-30-d.png"),
   width = 10,
   height = 6,
   device = "png"
@@ -340,9 +369,7 @@ ggsave(
 
 
 
-#stat_pointinterval(aes(x=lightness),.width = c(0.8,1.00))+
-#stat_eye(aes(x=lightness,fill=hex, group=1), 
-#         alpha=0.1, fill="#159090",side="bottom")+
+
 
 
 
