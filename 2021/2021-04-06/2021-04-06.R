@@ -46,7 +46,7 @@ b <- forest_area %>%
          ),
          name = case_when(
            diff == "A" ~ paste0("<span style='color:#FF8C00'>",entity,"</span>"),
-           diff == "B" ~ paste0("<span style='color:#159090'>",entity,"</span>"),
+           diff == "B" ~ paste0("<span style='color:#386cb0'>",entity,"</span>"),
            diff == "C" ~ paste0("<span style='color:#A034F0'>",entity,"</span>")
          )) %>%
   arrange(-year2020)
@@ -68,7 +68,7 @@ b %>%
     show.legend = FALSE,
     shape=21, fill="white",size=5
   ) +
-  scale_color_manual(values = c("#FF8C00","#159090")) +
+  scale_color_manual(values = c("#FF8C00","#386cb0")) +
   scale_x_continuous(
     expand = c(0.1, 0.1),
     breaks = c(0,5,10,15,20,25),
@@ -81,8 +81,8 @@ b %>%
   geom_richtext(
     aes(
       x=17.5,y=13,label = "<b style='font-size:10pt;'>How are forests distributed across the world regions from 2000 to 2020</b> <br> 
-      <br><span style='font-size:10pt;'><span style='color:#159090'>Decreasing 2020 < 2000</span> <span style='color:#FF8C00'>Increasing 2020 > 2000</span> <br>
-      <br><span style='font-size:8pt;'>The top 10 highest forest percentage coutries in 2000 are: Russia, Brazil, Canada, <br>
+      <br><span style='font-size:10pt;'><span style='color:#386cb0'>Decreasing 2020 < 2000</span> <span style='color:#FF8C00'>Increasing 2020 > 2000</span> <br>
+      <br><span style='font-size:8pt;'>The top 10 countries with the highest forest share in 2000 are: Russia, Brazil, Canada, <br>
       United States, China, Australia, Democratic Republic of Congo, Indonesia, Peru, Angola."),
     family = "roboto",
     size = 1.5,
