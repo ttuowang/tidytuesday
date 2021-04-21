@@ -91,7 +91,7 @@ all_stat %>%
     aes(x=x,y=y,label=label),
     fill = NA, label.color = NA, family='roboto') +
   geom_richtext(
-    aes(x=2020.5,y=7.5,label="Log of total titles"),color='white',
+    aes(x=2020.5,y=7.5,label="**Log of total titles**"),color='grey70',
     fill = NA, label.color = NA, family='roboto'
   ) +
   scale_fill_manual(values = col_pal) +
