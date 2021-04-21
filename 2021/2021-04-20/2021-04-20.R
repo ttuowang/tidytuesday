@@ -63,7 +63,7 @@ title_df1 <- data.frame(
 title_df2 <- data.frame(
   x = 2010.5,
   y = 6.5,
-  label="<b style='font-size:14pt;'><span style='color:white'>Logatithm of the cumulative sum of titles<br>
+  label="<b style='font-size:14pt;'><span style='color:white'>Logarithm of the cumulative sum of titles<br>
   <b style='font-size:14pt;'><span style='color:white'>Comparison between <span style='color:#fcbf49'>**Movies**</span> and 
     <span style='color:#e63946'>**TV Shows**</span></span></b>"
 )
